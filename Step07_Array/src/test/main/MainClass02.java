@@ -20,8 +20,9 @@ public class MainClass02 {
 		 * .
 		 * 499번 방에 500을 저장해보세요.
 		 */
-		
-		for(int i = 0; i < 500; i++) {
+		//배열의 방의 size 만큼 반복문 돌면서
+		for(int i = 0; i < nums2.length; i++) {
+			//배열의 i번째 방에 i에 1을 더한 값을 대입한다.
 			nums2[i] = i + 1;
 		}
 		
