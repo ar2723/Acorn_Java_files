@@ -22,6 +22,7 @@ public class MainClass03 {
 		MacBook book = new MacBook(
 				new Cpu(), new Memory(), new HardDisk()
 				);
+		//객체의 참조값을 인자로 받는 것이기 때문에 아래와 같이 null을 집어넣어도 된다.
 		MacBook book2 = new MacBook(null, null, null);
 		
 		book.doGame();

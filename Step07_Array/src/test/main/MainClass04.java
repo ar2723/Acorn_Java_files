@@ -12,14 +12,24 @@ public class MainClass04 {
 		 * 3. 반복문 for 를 이용해서 순서대로 배열의 각각의 방에 있는 Bike 객체의
 		 * ride()메소드를 호출 해보세요.
 		 */
-		
+		//1. 
 		Bike[] bikes = new Bike[3];
+		//2.
 		bikes[0] = new Bike();
 		bikes[1] = new Bike();
 		bikes[2] = new Bike();
-		
+		//3.
 		for(int i = 0; i < bikes.length; i++) {
-			bikes[i].ride();
+			//i번째 방에 있는 Bike 객체의 참조값을 얻어와서 임시변수 tmp에 담기
+			Bike tmp = bikes[i];
+			//객체의 참조값이 들어있는 tmp에 .을 찍어서 메소드 호출
+			tmp.ride();
+		}
+		System.out.println("----확장 for 문을 사용하면----");
+		//아래 요약문에서 Bike는 type이고, bikes는 bike[]이다
+		for(Bike tmp:bikes) {
+			// tmp = bikes[i]
+			tmp.ride();
 		}
 		
 	}
