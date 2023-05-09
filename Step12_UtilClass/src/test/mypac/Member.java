@@ -1,6 +1,8 @@
 package test.mypac;
 
 public class Member {
+	//객체의 필드를 활용해서 자바스크립트에서의 오브젝트 흉내를 낼 수 있다.
+	//{key: value의 쌍을 한꺼번에 관리}
 	public int num;
 	public String name;
 	public String addr;

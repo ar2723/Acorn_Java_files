@@ -21,7 +21,7 @@ public class MainClass03 {
 			}
 		};
 		
-		//자바스크립트에서 forEach 메소드는 greets.forEach((item) => {}) 이렇게 사용된다.
+		//자바스크립트에서 forEach 메소드는 greets.forEach((item) => {}) 와 같이 작성한다.
 		greets.forEach(con);
 		
 		System.out.println("---------------");

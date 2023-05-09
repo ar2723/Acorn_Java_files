@@ -41,7 +41,6 @@ public class MainClass04 {
 			public void accept(Car t) {
 				t.drive();
 			}
-			
 		});
 		System.out.println("----------");
 		cars.forEach((t)->{
