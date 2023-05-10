@@ -25,7 +25,7 @@ public class MyFrame extends JFrame implements ActionListener{
 		 * 따라서 문자열은 내용이 같은지 정확히 비교할 때는 반드시 .equals() 메소드를 이용해야 한다.
 		 * (이걸 까먹으면 밤 셀수도 있음)
 		 */
-		if(cmd.equals("send")) {
+		if(cmd.equals("send")) { // cmd == "send" -> 이렇게 작성하면 문법에 오류가 발생할 가능성이 높다.
 			JOptionPane.showMessageDialog(this, "전송합니다.");
 		} else if(cmd.equals("delete")) {
 			JOptionPane.showMessageDialog(this, "삭제합니다.");
