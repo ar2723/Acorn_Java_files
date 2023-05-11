@@ -44,7 +44,7 @@ public class MyFrame2 extends JFrame implements ActionListener{
 			} else if (btn.equals("divide")) {
 				if(num2 == 0) {
 					JOptionPane.showMessageDialog(this, "어떤 수를 0으로 나룰 수는 없어요!");
-					//메소드를 여기서 종료 시키기
+					//메소드를 여기서 종료 시키기 
 					return;
 				}
 				result = num1 / num2;
