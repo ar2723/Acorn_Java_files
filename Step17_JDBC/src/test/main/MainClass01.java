@@ -13,10 +13,10 @@ import java.sql.ResultSet;
  * Oracle에 연결하기 위해서는 드라이버 클래스가 들어있는 ojdbc6.jar 파일을
  * 사용할 수 있도록 설정해야 한다.
  * 
- * 프로젝트에 마우스 우클릭 => Build Path => Configure Build Path => Librarys 탭 선택
+ * 프로젝트에 마우스 우클릭 => Build Path => Configure Build Path => Libraries 탭 선택
  * => classpath 선택 => 우측 Add External jar 버튼을 누른 후 => ojdbc6.jar 파일을 찾은 다음 => Apply
  */
-public class MainClass07 {
+public class MainClass01 {
 	public static void main(String[] args) {
 		//DB 연결객체를 담을 지역 변수 만들기
 	    Connection conn=null;
@@ -35,6 +35,7 @@ public class MainClass07 {
 	      } catch (Exception e) {
 	         e.printStackTrace();
 	      }
+	      
 	      //SELECT 작업을 위해서 필요한 객체의 참조값을 담을 지역 변수 미리 만들기
 	      PreparedStatement pstmt = null;
 	      ResultSet rs = null;
@@ -44,10 +45,11 @@ public class MainClass07 {
 	    	  String sql ="SELECT num, name, addr"
 	    			  + " FROM member"
 	    			  + " ORDER BY num DESC";
+	    	  //PreparedStatement 객체(DB의 쿼리문을 직접 수행)의 참조값 얻어오기
 	    	  pstmt = conn.prepareStatement(sql);
 	    	  //SELECT 문 실행하고 결과 값을 ResultSet으로 얻어내기
 	    	  rs = pstmt.executeQuery();
-	    	  while(rs.next()) {
+	    	  while(rs.next()) { // cursor 다음에 데이터가 있으면 true를 반환하고, 커서가 데이터 열에서 1칸 아래로 내려온다.
 	    		  int num = rs.getInt("num");
 	    		  String name = rs.getString("name");
 	    		  String addr = rs.getString("addr");
@@ -56,7 +58,7 @@ public class MainClass07 {
 	    	  }
 	    	  
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	      
 	}
