@@ -44,7 +44,7 @@ public class MainClass01 {
 	    	  //실행할 sql 문
 	    	  String sql ="SELECT num, name, addr"
 	    			  + " FROM member"
-	    			  + " ORDER BY num DESC";
+	    			  + " ORDER BY num ASC";
 	    	  //PreparedStatement 객체(DB의 쿼리문을 직접 수행)의 참조값 얻어오기
 	    	  pstmt = conn.prepareStatement(sql);
 	    	  //SELECT 문 실행하고 결과 값을 ResultSet으로 얻어내기

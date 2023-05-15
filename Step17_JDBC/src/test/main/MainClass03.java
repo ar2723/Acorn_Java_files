@@ -4,14 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-public class MainClass02 {
+public class MainClass03 {
 	public static void main(String[] args) {
-		//member 테이블에 추가할 회원의 정보라고 가정
-		int num = 5;
-		String name = "주뎅이";
-		String addr = "봉천동";
-		
-		
 		//DB 연결객체를 담을 지역 변수 만들기
 	    Connection conn=null;
 	      
@@ -30,27 +24,27 @@ public class MainClass02 {
 	         e.printStackTrace();
 	      }
 	      
-	      //sql 문을 대신 실행해줄 객체의 참족값을 담을 지역변수 미리 만들기
+	      //3번 회원의 주소를 동물원으로 수정하고자 한다.
+	      int num = 3;
+	      String addr = "에버랜드";
+	      
 	      PreparedStatement pstmt = null;
 	      try {
 			//실행할 미완성의 sql 문
-	    	String sql = "INSERT INTO member"
-	    			//습관적으로 한칸을 띄고 작성하는 습관을 들이자 
-	    			+ " (num, name, addr)"
-	    			+ " VALUES(?, ?, ?)";
+	    	String sql = "UPDATE member"
+	    			+ 	 " SET addr = ?"
+	    			+ 	 " WHERE num = ?";
 	    	//미완성의 sql 문을 전달하면서 PreparedStatement 객체의 참조값 얻어내기
 	    	pstmt = conn.prepareStatement(sql);
 	    	//PreparedStatement 객체의 메소드를 이용해서 미완성이 sql문을 완성시키기(? 에 값 바인딩하기)
-	    	pstmt.setInt(1, num); // 1번째 ? 에 숫자 바인딩
-	    	pstmt.setString(2, name); // 2번째 ? 에 문자열 바인딩
-	    	pstmt.setString(3, addr); // 3번째 ? 에 문자열 바인딩
+	    	pstmt.setString(1, addr); // 1번째 ? 에 문자열 바인딩
+	    	pstmt.setInt(2, num); // 2번째 ? 에 숫자 바인딩
+	    	
 	    	//sql 문 실행하기
 	    	pstmt.executeUpdate();
-	    	System.out.println("회원 정보를 저장했습니다.");
+	    	System.out.println("회원 정보를 수정했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	      
-		
 	}
 }
