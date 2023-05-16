@@ -15,9 +15,7 @@ public class MemberDto {
 	private String addr;
 	
 	//디폴트 생성자
-	public MemberDto() {
-		
-	}
+	public MemberDto() {}
 	
 	//필드의 data type과 필드명만 정해지면 생성자, getter & setter 
 	

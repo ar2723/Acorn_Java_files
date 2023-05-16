@@ -33,21 +33,21 @@ public class MainClass10 {
 	    PreparedStatement pstmt = null;
 	      
 	    try {
-	    	  conn = new DBConnect().getConn();
-	    	  //실행할 sql 문
-	    	  String sql = "UPDATE member"
-		    			+ " SET name = ?, addr = ?"
-		    			+ " WHERE num = ?";
+	    	conn = new DBConnect().getConn();
+	    	//실행할 sql 문
+	    	String sql = "UPDATE member"
+	    			+ " SET name = ?, addr = ?"
+		    		+ " WHERE num = ?";
 
-	    	  	//SELECT 문 실행하고 결과 값을 ResultSet으로 얻어내기
-	    	  	pstmt = conn.prepareStatement(sql);
-		    	//PreparedStatement 객체의 메소드를 이용해서 미완성이 sql문을 완성시키기(? 에 값 바인딩하기)
-		    	pstmt.setString(1, mem.getName()); // 1번째 ? 에 문자열 바인딩
-		    	pstmt.setString(2, mem.getAddr()); // 2번째 ? 에 문자열 바인딩
-		    	pstmt.setInt(3, mem.getNum());
-		    	//sql 문 실행하기
-		    	pstmt.executeUpdate();
-		    	System.out.println("회원 정보를 수정했습니다.");
+	    	//SELECT 문 실행하고 결과 값을 ResultSet으로 얻어내기
+	    	pstmt = conn.prepareStatement(sql);
+		    //PreparedStatement 객체의 메소드를 이용해서 미완성이 sql문을 완성시키기(? 에 값 바인딩하기)
+		    pstmt.setString(1, mem.getName()); // 1번째 ? 에 문자열 바인딩
+		    pstmt.setString(2, mem.getAddr()); // 2번째 ? 에 문자열 바인딩
+		    pstmt.setInt(3, mem.getNum());
+		    //sql 문 실행하기
+		    pstmt.executeUpdate();
+		    System.out.println("회원 정보를 수정했습니다.");
 	    	  
 	      } catch (Exception e) {
 	    	  e.printStackTrace();
