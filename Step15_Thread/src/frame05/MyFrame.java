@@ -97,7 +97,7 @@ public class MyFrame extends JFrame implements ActionListener{
 	     startBtn.addActionListener(this);
 	     //프레임에 버튼 추가
 	     add(startBtn);
-	      
+	     
 	     JTextField tf=new JTextField(10);
 	     //프레임에 JTextField 추가
 	     add(tf);

@@ -125,12 +125,13 @@ public class MemberDao {
 			//실행할 sql 문
 			String sql = "INSERT INTO member"
 					+ " (num, name, addr)"
-					+ " VALUES(member_seq.NEXTVAL, ?, ?)";
+					+ " VALUES(?, ?, ?)";
 			//sql 문을 대신 실행해줄 PreparedStatement 객체의 참조값 얻어오기
 			pstmt = conn.prepareStatement(sql);
 			//sql 문이 ?가 존재하는 미완성이라면 여기서 완성한다.
-			pstmt.setString(1, dto.getName());
-			pstmt.setString(2, dto.getAddr());
+			pstmt.setInt(1, dto.getNum());
+			pstmt.setString(2, dto.getName());
+			pstmt.setString(3, dto.getAddr());
 			
 			//insert or update or delete 문을 실제 수행한다. 변화된 row의 갯수가 리턴된다.
 			rowCount = pstmt.executeUpdate(); //수행하고 리턴되는 값을 변수에 담는다.
