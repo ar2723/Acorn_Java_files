@@ -21,6 +21,11 @@ import test.dao.MemberDao;
 import test.dto.MemberDto;
 
 public class TestFrame extends JFrame{
+	//필드
+	JTable table;
+	DefaultTableModel model;
+	MemberDao dao;
+	
 	//생성자
 	public TestFrame(String title) {
 		super(title);
@@ -56,11 +61,12 @@ public class TestFrame extends JFrame{
 		add(panel, BorderLayout.NORTH);
 		panel.setBackground(Color.yellow);
 		
-		JTable table = new JTable();
+		//테이블 객체 생성 후 필드에 참조값 담기
+		table = new JTable();
 		
 		String[] colNames = {"번호", "이름", "주소"};
 		//테이블에 연결할 모델 객체 생성 (테이블에 출력할 데이터를 여기에 추가하면 테이블에 출력된다)
-		DefaultTableModel model = new DefaultTableModel(colNames, 0);
+		model = new DefaultTableModel(colNames, 0);
 		//모델을 테이블에 연결한다.
 		table.setModel(model);
 		//스크롤이 가능 하도록 테이블을 JScrollpane에 감싼다.
@@ -77,16 +83,10 @@ public class TestFrame extends JFrame{
 //		model.addRow(row2);
 //		model.addRow(row3);
 		
-		MemberDao dao = new MemberDao();
+		dao = new MemberDao();
+		
 		btn1.addActionListener((e)->{
-			List<MemberDto> memberList = dao.getList();
-			Collections.reverse(memberList);
-			model.setRowCount(0);
-			for(MemberDto tmp : memberList) {
-				//tmp = memberList.get(i)
-				Object[] data = {tmp.getNum(), tmp.getName(), tmp.getAddr()};
-				model.addRow(data);
-			}
+			displayMember();
 		});
 		
 		addBtn.addActionListener((e)->{
@@ -97,16 +97,9 @@ public class TestFrame extends JFrame{
 				dto.setAddr(inputAddr.getText());
 				dao.insert(dto);
 				
-				//기존에 출력된 내용을 모두 삭제하기
-				model.setRowCount(0);
+				//JTable을 refresh 한다.
+				displayMember();
 				
-				List<MemberDto> memberList = dao.getList();
-				Collections.reverse(memberList);
-				for(MemberDto tmp : memberList) {
-					//tmp = memberList.get(i)
-					Object[] data = {tmp.getNum(), tmp.getName(), tmp.getAddr()};
-					model.addRow(data);
-				}
 				JOptionPane.showMessageDialog(this, "데이터를 추가했습니다!");
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(this, "번호칸에는 반드시 숫자만 입력해주세요!");
@@ -114,21 +107,24 @@ public class TestFrame extends JFrame{
 		});
 		
 		deleteBtn.addActionListener((e)->{
-			try {
-				int rowNum = Integer.parseInt(inputNum.getText());
-				dao.delete(rowNum);
-				
-				model.setRowCount(0);
-				
-				List<MemberDto> memberList = dao.getList();
-				Collections.reverse(memberList);
-				for(MemberDto tmp : memberList) {
-					//tmp = memberList.get(i)
-					Object[] data = {tmp.getNum(), tmp.getName(), tmp.getAddr()};
-					model.addRow(data);
-				}
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "삭제할 데이터 행의 번호를 입력해주세요!");
+			//JTable로부터 선택된 row의 인덱스를 얻어낸다
+			int selectedRow = table.getSelectedRow();
+			if(selectedRow == -1) { //만일 선택된 row가 없다면
+				JOptionPane.showMessageDialog(this, "삭제할 행을 선택하세요!");
+				return; //메소드를 여기서 끝내라 (리턴)
+			}
+			
+			//JOPtionPane 클래스가 가지고 있는 static 메소드가 return하는 값은 보통 int나 String인 경우가 많은데
+			//이때 이러한 반환값의 데이터 타입은 static final 상수로 사전에 정의되어 있는 경우가 많다.
+			int result = JOptionPane.showConfirmDialog(this, "정말로 삭제하시겠습니까?");
+			// "예" 버튼을 눌렀을 때만 실제 삭제하기
+			if(result == JOptionPane.YES_OPTION) {
+				//선택된 row에 해당하는 회원번호(PK)를 얻어낸다.
+				int num = (int)model.getValueAt(selectedRow, 0);
+				//Dao 객체를 이용해서 회원 정보를 삭제한다.
+				dao.delete(num);
+				//JTable을 refresh 한다.
+				displayMember();
 			}
 		});
 		
@@ -136,16 +132,9 @@ public class TestFrame extends JFrame{
 			try {
 				int rowNum = Integer.parseInt(inputNum.getText());
 				dao.update(new MemberDto(rowNum, inputName.getText(), inputAddr.getText()));
+				//JTable을 refresh 한다.
+				displayMember();
 				
-				model.setRowCount(0);
-				
-				List<MemberDto> memberList = dao.getList();
-				Collections.reverse(memberList);
-				for(MemberDto tmp : memberList) {
-					//tmp = memberList.get(i)
-					Object[] data = {tmp.getNum(), tmp.getName(), tmp.getAddr()};
-					model.addRow(data);
-				}
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(this, "수정할 데이터 행의 번호를 입력해주세요!");
 			}
@@ -157,5 +146,17 @@ public class TestFrame extends JFrame{
 		f.setBounds(100, 100, 1100, 500);
 		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		f.setVisible(true);
+	}
+	
+	//TestFrame에 메소드 추가
+	public void displayMember() {
+		model.setRowCount(0);	
+		List<MemberDto> memberList = dao.getList();
+		Collections.reverse(memberList);
+		for(MemberDto tmp : memberList) {
+			//tmp = memberList.get(i)
+			Object[] data = {tmp.getNum(), tmp.getName(), tmp.getAddr()};
+			model.addRow(data);
+		}
 	}
 }
